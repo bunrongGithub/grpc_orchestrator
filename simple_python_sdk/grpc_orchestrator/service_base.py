@@ -24,7 +24,10 @@ class GrpcSagaTransactionParticipantBase(saga_pb2_grpc.SagaParticipantServicer):
         raise NotImplementedError
     def compensate(self,request,context) -> saga_pb2.SagaParticipantResponse:
         raise NotImplementedError
-
+    def _get_step_method(self,request)-> str:
+        method = request.headers.get("step-method")
+        if method is not None:
+            return method
 
 def run_participant_server(service: GrpcSagaTransactionParticipantBase, port: int = 50051):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
