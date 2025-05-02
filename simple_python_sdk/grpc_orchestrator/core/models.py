@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 from typing import List, Dict, Any, Optional
-import saga_pb2
+from .. import saga_pb2
 
 @dataclass
 class SagaInstance:

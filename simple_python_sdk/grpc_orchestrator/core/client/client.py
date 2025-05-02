@@ -1,12 +1,12 @@
 import base64
 import json
 import grpc
-import saga_pb2
-import saga_pb2_grpc
+from ... import  saga_pb2
+from ... import saga_pb2_grpc
 from google.protobuf.json_format import MessageToDict
 
-from core.connection.grpc_connection import GrpcConnection
-from utils.pretty import prettify_saga_response
+from grpc_orchestrator.core.connection.grpc_connection import GrpcConnection
+from grpc_orchestrator.utils.pretty import prettify_saga_response
 
 
 class GrpcOrchestratorClient:

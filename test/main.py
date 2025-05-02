@@ -1,23 +1,18 @@
-# Grpc Orchestrator SDK
-A gRPC-based implementation of the Saga pattern for distributed transactions.
+from grpc_orchestrator import service_base
 
-## Features
 
-- Transaction orchestration
-- Automatic compensation
-- gRPC interface
-- gRPC Connection
-- Memory storage backends
+class ServiceOrder(service_base.GrpcSagaTransactionParticipantBase):
+    def execute(self, request, context):
+        return super().execute(request, context)
 
-## Installation
+    def compensate(self, request, context):
+        return super().compensate(request, context)
 
-```bash
-pip install grpc_orchestrator
-```
 
-## Quick Start
+if __name__ == "__main__":
+    service_base.run_participant_server(ServiceOrder(), 50052)
 
-```python
+
 from grpc_orchestrator.core.client.client import GrpcOrchestratorClient
 
 client = GrpcOrchestratorClient(orchestrator_host="localhost")
@@ -39,7 +34,3 @@ client.start_transaction(transaction_id="1234",steps=steps,payload={
     "id": "1",
     "name":"item1"
 })
-
-status = client.get_transaction_status(transaction_id="order_123")
-print(status)
-```

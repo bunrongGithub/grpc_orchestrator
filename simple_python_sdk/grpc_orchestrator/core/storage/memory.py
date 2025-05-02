@@ -2,7 +2,7 @@ from ast import Dict
 from datetime import datetime
 from typing import Optional
 import saga_pb2
-from core.models import SagaInstance
+from ...core.models import SagaInstance
 
 
 class InMemoryStorage(SagaInstance):

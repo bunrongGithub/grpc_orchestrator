@@ -1,3 +1,12 @@
+Metadata-Version: 2.4
+Name: grpc_orchestrator
+Version: 0.0.2
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: license-file
+
 # Grpc Orchestrator SDK
 A gRPC-based implementation of the Saga pattern for distributed transactions.
 

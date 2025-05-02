@@ -1,6 +1,6 @@
 import psycopg2
-from simple_python_sdk.core.models import SagaInstance
-from simple_python_sdk.core.storage.base import SagaStorage
+from ...core.models import SagaInstance
+from ...core.storage.base import SagaStorage
 
 
 class Postgrestorage(SagaStorage):

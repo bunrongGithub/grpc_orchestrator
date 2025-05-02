@@ -1,10 +1,8 @@
 from concurrent import futures
 import json
 import logging
-
-import grpc
-import saga_pb2, saga_pb2_grpc
-import service_base
+from .... import saga_pb2
+from .... import service_base
 
 
 class ExampleService(service_base.GrpcSagaTransactionParticipantBase):

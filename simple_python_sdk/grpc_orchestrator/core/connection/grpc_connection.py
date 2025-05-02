@@ -1,6 +1,6 @@
 
 from typing import Any
-from core.connection.manager import ConnectionManager
+from grpc_orchestrator.core.connection.manager import ConnectionManager
 
 
 class GrpcConnection:
