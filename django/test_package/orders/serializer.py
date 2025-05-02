@@ -4,12 +4,19 @@ from product.serializer import ProductSerializer
 from product.models import ProductModel
 from orders.models import OrderModel
 class OrderSerializer(serializers.ModelSerializer):
-    products = serializers.SerializerMethodField()
+    saga_status=serializers.SerializerMethodField()
     class Meta:
         model=OrderModel
-        fields=["id","product_id","products"]
-
-    def get_products(self,obj):
-        instance = obj.product_id
-        qs = ProductModel.objects.get(id=instance)
-        return ProductSerializer(qs).data
+        fields="__all__"
+    read_only_fields = ["status","transaction_id","saga_status","order_id"]
+    def get_saga_status(self,obj):
+        if not obj.transaction_id:
+            return None
+        if hasattr(self.context['request'],"saga_status"):
+            return self.context['request'].saga_status
+        try:
+            from grpc_orchestrator.core.client.client import GrpcOrchestratorClient
+            client = GrpcOrchestratorClient(orchestrator_host="localhost")
+            return client.get_transaction_status(obj.transaction_id)
+        except: 
+            return None
