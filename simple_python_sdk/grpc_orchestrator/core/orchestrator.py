@@ -12,6 +12,10 @@ from grpc_orchestrator.core.storage.memory import InMemoryStorage
 from grpc_orchestrator.core.storage.base import SagaStorage
 from grpc_orchestrator.core.models import SagaInstance
 
+"""
+The core implementation 
+"""
+
 class GrpcOrchestratorTransaction(saga_pb2_grpc.SagaOrchestratorServiceServicer):
     def __init__(self, storage: SagaStorage):
         self.storage = storage

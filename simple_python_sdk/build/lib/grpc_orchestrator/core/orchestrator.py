@@ -5,12 +5,16 @@ import grpc
 from google.protobuf import timestamp_pb2
 from concurrent import futures
 
-from .. import saga_pb2
-from .. import saga_pb2_grpc
-from ..core.storage.memory import InMemoryStorage
+from grpc_orchestrator import saga_pb2
+from grpc_orchestrator import saga_pb2_grpc
+from grpc_orchestrator.core.storage.memory import InMemoryStorage
 
-from ..core.storage.base import SagaStorage
-from ..core.models import SagaInstance
+from grpc_orchestrator.core.storage.base import SagaStorage
+from grpc_orchestrator.core.models import SagaInstance
+
+"""
+The core implementation 
+"""
 
 class GrpcOrchestratorTransaction(saga_pb2_grpc.SagaOrchestratorServiceServicer):
     def __init__(self, storage: SagaStorage):

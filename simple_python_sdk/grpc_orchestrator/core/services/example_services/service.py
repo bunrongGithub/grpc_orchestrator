@@ -3,9 +3,7 @@ import json
 import logging
 from grpc_orchestrator import saga_pb2
 from grpc_orchestrator import service_base
-
-
-class ExampleService(service_base.GrpcSagaTransactionParticipantBase):
+class ExampleServiceA(service_base.GrpcSagaTransactionParticipantBase):
     def execute(self, request, context):
         method = self._get_step_method(request)
         self.logger = logging.getLogger(__name__)
@@ -52,8 +50,13 @@ class ExampleService(service_base.GrpcSagaTransactionParticipantBase):
             success=True, result_payload=json.dumps(refund_data).encode("utf-8")
         )
 
+class ExampleServiceB(service_base.GrpcSagaTransactionParticipantBase):
+    def execute(self, request, context):
+        return super().execute(request, context)
+    def compensate(self, request, context):
+        return super().compensate(request, context)
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    service_base.run_participant_server(ExampleService(), port=50053)
+    service_base.run_participant_server(ExampleServiceA(), port=50053)

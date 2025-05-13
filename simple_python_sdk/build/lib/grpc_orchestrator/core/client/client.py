@@ -1,8 +1,9 @@
 import base64
 import json
+import uuid
 import grpc
-from ... import  saga_pb2
-from ... import saga_pb2_grpc
+from grpc_orchestrator import  saga_pb2
+from grpc_orchestrator import saga_pb2_grpc
 from google.protobuf.json_format import MessageToDict
 
 from grpc_orchestrator.core.connection.grpc_connection import GrpcConnection
@@ -54,7 +55,7 @@ class GrpcOrchestratorClient:
                                 step['resultPayload'] = json.loads(raw.decode('utf-8'))
                             except Exception as e:
                                 raise e
-                return prettify_saga_response(response=response_dict)
+                return response_dict
         except grpc.RpcError as e:
             print(f"Error getting status: {e.code()}: {e.details()}")
             return None
@@ -63,22 +64,22 @@ if __name__ == '__main__':
     steps = [
         {
             'port': 50053,
-            'rpc_method': 'RefundPayment',
-            'compensation_method': 'RefundPayment',
+            'rpc_method': 'process_order',
+            'compensation_method': 'rollback_order',
             'timeout_seconds': 5
         },
-         {
-            'port': 50052,
-            'rpc_method': 'ReserveInventory',
-            'compensation_method': 'ReleaseInventory',
-            'timeout_seconds': 5
-        }
+        #  {
+        #     'port': 50052,
+        #     'rpc_method': 'ReserveInventory',
+        #     'compensation_method': 'ReleaseInventory',
+        #     'timeout_seconds': 5
+        # }
     ]
+    transaction_id=uuid.uuid4()
     response = client.start_transaction(
         transaction_id="order_123",
         steps=steps,
     )
-    print("Response:", response)
     status = client.get_transaction_status(transaction_id="order_123")
     
     print("Receive status:: ", status)
