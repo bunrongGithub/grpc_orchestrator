@@ -61,4 +61,4 @@ client.start_transaction(transaction_id="1234",steps=steps,payload={
 status = client.get_transaction_status(transaction_id="order_123")
 print(status)
 
-![Alt text](grpc_orchestrator/images/flow.png?raw=true "Title")
+![Saga Flow Diagram](grpc_orchestrator/images/flow.png)
